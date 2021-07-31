@@ -80,18 +80,22 @@ def GCN(adj_dim, feature_dim, n_hidden, num_class, num_layers=2, activation=tf.n
     # X_emb = emb(X_in)
     # h = Reshape([X_emb.shape[-1]])(X_emb)
 
+    # num_feature < num_node
     if feature_less:
         X_in = Input(shape=(1,), )
 
+        # input dimL adj_dim   output_dim: feature_dim
         emb = Embedding(adj_dim, feature_dim,
                         embeddings_initializer=Identity(1.0), trainable=False)
         X_emb = emb(X_in)
+        # X_emb: (None, 1, 1433)
         h = Reshape([X_emb.shape[-1]])(X_emb)
     else:
         X_in = Input(shape=(feature_dim,), )
         h = X_in
 
     for i in range(num_layers):
+        # i == 1
         if i == num_layers - 1:
             activation = tf.nn.softmax
             n_hidden = num_class
