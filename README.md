@@ -7,6 +7,6 @@
 
 # How to run the code
 ```
-cd GCN
+cd GCN-model
 python GCN_cora.py
 ```
