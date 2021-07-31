@@ -97,7 +97,3 @@ def normalize_adj(adj, symmetric=True):
         D = sp.diags(np.power(np.array(adj.sum(1)), -1).flatten(), 0)
         adj_norm = D.dot(adj).tocsr()
     return adj_norm
-
-
-# a = pre_data("cora")
-# print(a)
