@@ -13,11 +13,15 @@ if __name__ == "__main__":
     adj, features, y_train, y_val, y_test, train_mask, val_mask, test_mask = pre_data('cora')
 
     adj = pre_adj(adj)
-    # sum(axis=1) 每一行相加
-    # reshape(-1,1) 转化为一列
+    # features.sum(axis-1,) 得到每一行 (每个node) features总数
+    # normalize 
     features /= features.sum(axis=1,).reshape(-1,1)
+#     print(features.sum(axis=1,))
+#     print(features[0].sum(axis=1,))
 
+    # dim(X) = 2708 * 1433
     X = features
+    # feature_dim = 1433
     feature_dim = X.shape[-1]
 
     # if FEATURE_LESS:
@@ -36,6 +40,7 @@ if __name__ == "__main__":
 
     # 训练迭代次数
     EPOCH = 200
+
     val_data = (model_input, y_val, val_mask)
     # 在每个epoch后保存模型到filepath
     # save_best_only：当设置为True时，将只保存在验证集上性能最好的模型
@@ -61,10 +66,6 @@ if __name__ == "__main__":
           'Test loss: {}\n'
           'Test weighted_loss: {}\n'
           'Test accuracy: {}'.format(*eval_results))
-
-    # embedding_model = Model(model.input, outputs=Lambda(lambda x: model.layers[-1].output)(model.input))
-    # embedding_weights = embedding_model.predict(model_input, batch_size=A.shape[0])
-    # y = np.genfromtxt("{}{}.content".format('../data/cora/', 'cora'), dtype=np.dtype(str))[:, -1]
 
 
 
